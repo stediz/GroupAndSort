@@ -18,9 +18,5 @@
 
     $tree = new Tree();
     
-    $return = $tree->createNodes(null,$transitions);
+    $return = $tree->createTree($transitions);
     exit();
-
-
-
-

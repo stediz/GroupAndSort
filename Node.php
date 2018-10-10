@@ -37,6 +37,11 @@
             return $this->children;
     }
 
+    /**
+     * Create Node and give him a name
+     *
+     * @param [type] $name
+     */
     public function __construct($name){
         $this->name = $name;
     }
@@ -57,6 +62,12 @@
         return (count($this->children) > 0);
     }
 
+    /**
+     * check if node has a specific child
+     *
+     * @param string $name
+     * @return boolean
+     */
     public function hasChild($name){
         foreach($this->children as $child)
         if($name === $child->getName())
@@ -64,6 +75,12 @@
         return false;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param string $name
+     * @return Node
+     */
     public function findChild($name){
         if(!$this->hasChildren()){
             return null;

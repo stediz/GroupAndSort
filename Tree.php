@@ -5,12 +5,38 @@ require_once ('Node.php');
 class Tree
 {
     /**
-     * Undocumented variable
+     * The root of the tree
      *
      * @var Node
      */
-
      private $root;
+
+     /**
+      * The parent node
+      *
+      * @var Node
+      */
+     private $parent;
+
+     /**
+      * Get the value of parent
+      */ 
+      public function getParent()
+      {
+        return $this->parent;
+      }
+
+      /**
+       * Set the value of root
+       *
+       * @return  Node
+       */ 
+      public function setParent($parent)
+      {
+        $this->parent = $parent;
+
+        return $parent;
+      }
 
      /**
       * Get the value of root
@@ -35,46 +61,53 @@ class Tree
       /**
       * Undocumented function
       *
-      * @param [type] $parent
       * @param [type] $nodes
       * @return void
       */
-    function createNodes($parent = null, $names){
+    function createTree($names){
         if(!is_array($names)){  
             return false;
         }
         // first levels of array
         foreach($names as $name => $namesSecondLevel){
-            $parent = $this->getRoot();
-            $found = $this->findNode($name);
-            if($found !== null) {
-                if($parent->hasChild($name))
-                    $node = $found;
-                else
-                    $node = $this->addNode($parent,$found);
-            }
-            else {
-                $node = $this->createNode($parent,$name);
-            }
-            if($parent === null){
+            $this->setParent($this->getRoot());
+            $node = $this->insert($name);
+
+            if($this->getParent() === null){
                 $this->setRoot($node);
             }
-            $parent = $node;
-            // second level of arrays
+
+
+            $this->setParent($node);
+            // second level of array
             foreach($namesSecondLevel as $nameSecondLevel){ 
-                $found = $this->findNode($nameSecondLevel);
-                if($found !== null) {
-                    $node = $this->addNode($parent,$found);
-                }
-                else {
-                    $node = $this->createNode($parent,$nameSecondLevel);
-                }
+                $node = $this->insert($nameSecondLevel);
             }        
         }
         return true;
     }
 
-    function createNode($parent, $name){
+    /**
+     * Inserts the Name into the tree
+     *
+     * @param [type] $name
+     * @return void
+     */
+    private function insert($name){
+        $found = $this->findNode($name);
+        if($found !== null) {
+            if($this->getParent()->hasChild($name))
+                $node = $found;
+            else
+                $node = $this->addNode($this->getParent(), $found);
+        }
+        else {
+            $node = $this->createNode($this->getParent(), $name);
+        }
+    return $node;
+    }
+
+    private function createNode($parent, $name){
         
         $node = new Node($name);
         // is it the new root?
@@ -84,7 +117,7 @@ class Tree
         return $parent->addChild($node);
     }
 
-    function addNode($parent, $node){
+    private function addNode($parent, $node){
         return $parent->addChild($node);
     }
 
@@ -94,7 +127,7 @@ class Tree
      * @param String $name
      * @return void
      */
-    public function findNode($name){
+    private function findNode($name){
         
         $return = null;
         if(empty($this->getRoot()))
@@ -103,4 +136,5 @@ class Tree
 
         return $return;
     }
+
 }
