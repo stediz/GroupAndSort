@@ -42,15 +42,15 @@
     }
 
     /**
-     * Todo check if node already exists
+     * Todo check if node already exists?
     */ 
     public function addChild($child){
 
         if(! $child instanceof Node) {
-            return false;
+            return null;
         }
         $this->children[] = $child;
-        return true;
+        return $child;
     }
 
     public function hasChildren(){
@@ -65,7 +65,8 @@
             if($child->getName() === $name){
                 return $child;
             }
-            return $child->findChild($name);
+            if(null !== ($result = $child->findChild($name)))
+                return $result;
         }
         return null;
     }

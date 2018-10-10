@@ -10,7 +10,19 @@
     $node->addChild(new Node('third'));
     if($node->hasChildren() === false )
         echo 'failure';
-    
+
+    $node->addChild(new Node('five'));
+    if($node->hasChildren() === false )
+        echo 'failure';
+        
+    if(null !== ($found1 = $node->findChild('six'))){
+        echo 'failure hasChild six';
+    }
+
+    if(null === ($found1 = $node->findChild('five'))){
+        echo 'failure hasChild five';
+    }
+
     if(null === ($found1 = $node->findChild('second'))){
         echo 'failure hasChild second';
     }
