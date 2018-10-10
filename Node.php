@@ -57,6 +57,13 @@
         return (count($this->children) > 0);
     }
 
+    public function hasChild($name){
+        foreach($this->children as $child)
+        if($name === $child->getName())
+            return true;
+        return false;
+    }
+
     public function findChild($name){
         if(!$this->hasChildren()){
             return null;
