@@ -2,7 +2,12 @@
     class Node {
 
     private $name;
-    private $child = [];
+    /**
+     * holds the children
+     *
+     * @var array
+     */
+    private $children = [];
 
     /**
      * Get the value of name
@@ -25,23 +30,44 @@
     }
 
     /**
-     * Get the value of child
+     * Get the value of children
      */ 
-    public function getChild()
+    public function getChildren()
     {
-            return $this->child;
+            return $this->children;
     }
 
     public function __construct($name){
         $this->name = $name;
     }
 
+    /**
+     * Todo check if node already exists
+    */ 
     public function addChild($child){
-        $this->child[] = $child;
+
+        if(! $child instanceof Node) {
+            return false;
+        }
+        $this->children[] = $child;
+        return true;
     }
 
-    public function hasChild(){
-        return (count($this->child) > 0);
+    public function hasChildren(){
+        return (count($this->children) > 0);
+    }
+
+    public function findChild($name){
+        if(!$this->hasChildren()){
+            return null;
+        }
+        foreach($this->children as $child){
+            if($child->getName() === $name){
+                return $child;
+            }
+            return $child->findChild($name);
+        }
+        return null;
     }
 
 }
