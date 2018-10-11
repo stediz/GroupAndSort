@@ -1,2 +1,2 @@
 # GroupAndSort
-Some fancy stuff
+php -f test/TreeToListTest.php
