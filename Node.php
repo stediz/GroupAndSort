@@ -10,9 +10,22 @@
     private $children = [];
 
     /**
+     * to avoid infinite loops in traversing algos
+     *
+     * @var bool;
+     */
+    private $visited = false;
+
+    public function setVisited($visited){
+        $this->visited = $visited;
+    }
+    public function isVisited(): bool{
+        return $this->visited;
+    }
+    /**
      * Get the value of name
      */ 
-    public function getName()
+     public function getName()
     {
             return $this->name;
     }
