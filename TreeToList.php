@@ -13,7 +13,21 @@ class TreeToList {
      */
     private $tree;
 
+    /**
+     * Undocumented variable
+     *
+     * @var array
+     */
     private $list = [];
+
+    /**
+     * Undocumented function
+     *
+     * @return array
+     */
+    public function getList() : array {
+        return $this->list;
+    }
 
     public function createList($tree){
 
@@ -26,13 +40,18 @@ class TreeToList {
         if($node->isVisited()){
             return;
         }
-        $this->list[] = $node->getName();
+        $this->list[] = $node->getState();
         $children = $node->getChildren();
         $node->setVisited(true);
         foreach($node->getChildren() as $child){
             $this->recursive($child);
         }
 
+    }
+    public function print(){
+        foreach($this->getList() as $element){
+            $element->print();
+        }
     }
 
 }

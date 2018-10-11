@@ -1,7 +1,17 @@
 <?php
+require_once ('State.php');
+
     class Node {
 
     private $name;
+
+    /**
+     * Undocumented variable
+     *
+     * @var State
+     */
+    private $state;
+
     /**
      * holds the children
      *
@@ -23,11 +33,30 @@
         return $this->visited;
     }
     /**
+     * Get the value of state
+     */ 
+     public function getState()
+    {
+            return $this->state;
+    }
+
+    /**
+     * Set the value of state
+     *
+     * @return  self
+     */ 
+    public function setState($state)
+    {
+            $this->state = $state;
+
+            return $this;
+    }
+    /**
      * Get the value of name
      */ 
      public function getName()
     {
-            return $this->name;
+            return $this->getState()->getName();
     }
 
     /**
@@ -37,7 +66,7 @@
      */ 
     public function setName($name)
     {
-            $this->name = $name;
+            $this->getState()->setName($name);
 
             return $this;
     }
@@ -57,6 +86,8 @@
      */
     public function __construct($name){
         $this->name = $name;
+        $this->setState(new State($name));
+        $this->getState()->findMessages();
     }
 
     /**
